@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0a0c11">
+<title>Huquq Oktagoni</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <!-- BOSH SAHIFA -->
+  <section id="s-home" class="screen active">
+    <header class="brand">
+      <svg viewBox="0 0 48 48" class="logo" aria-hidden="true"><polygon points="15,3 33,3 45,15 45,33 33,45 15,45 3,33 3,15" fill="none" stroke="currentColor" stroke-width="3"/><path d="M24 12v24M14 18h20M14 18l-4 9h8zM34 18l-4 9h8z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div><h1>Huquq Oktagoni</h1><p>O'zbekiston huquqi bo'yicha jang maydoni</p></div>
+    </header>
+
+    <div class="card profile">
+      <div class="avatar" id="p-avatar">?</div>
+      <div class="pinfo">
+        <div class="pname" id="p-name">…</div>
+        <div class="ptitle" id="p-title">Yuklanmoqda</div>
+      </div>
+      <div class="prating"><b id="p-rating">–</b><span>reyting</span></div>
+    </div>
+    <div class="stats">
+      <div><b id="st-rank">–</b><span>o'rin</span></div>
+      <div><b id="st-wins">0</b><span>g'alaba</span></div>
+      <div><b id="st-games">0</b><span>jang</span></div>
+      <div><b id="st-xp">0</b><span>ball</span></div>
+    </div>
+
+    <button class="mode red" data-mode="duel">
+      <span class="mi">🥊</span><span class="mt"><b>Duel 1×1</b><small>Raqib bilan real vaqtda, reyting uchun</small></span><span class="go">›</span>
+    </button>
+    <button class="mode gold" data-mode="tour">
+      <span class="mi">🏆</span><span class="mt"><b>Turnir</b><small>8 kishi, 3 bosqich, bitta chempion</small></span><span class="go">›</span>
+    </button>
+    <button class="mode blue" data-mode="room">
+      <span class="mi">🎯</span><span class="mt"><b>Do'stlar xonasi</b><small>Kod bilan kiring, hamma bir vaqtda o'ynaydi</small></span><span class="go">›</span>
+    </button>
+    <button class="ghost" data-mode="top">📊 Reyting jadvali</button>
+    <p class="note">Savollar o'quv va ko'ngilochar maqsadda tuzilgan va huquqiy maslahat hisoblanmaydi. Rasmiy matnlar uchun lex.uz saytiga qarang.</p>
+  </section>
+
+  <!-- QIDIRUV -->
+  <section id="s-search" class="screen center">
+    <div class="radar"><i></i><i></i><i></i><span>🥊</span></div>
+    <h2>Raqib qidirilmoqda</h2>
+    <p class="muted" id="search-sub">Reytingi yaqin jangchi topilmoqda</p>
+    <p class="muted small">Agar jonli raqib topilmasa, bir necha soniyadan keyin bot raqib beriladi.</p>
+    <button class="ghost" id="search-cancel">Bekor qilish</button>
+  </section>
+
+  <!-- XONA -->
+  <section id="s-room" class="screen">
+    <button class="back" data-go="home">‹ Orqaga</button>
+    <div id="room-entry">
+      <h2>Do'stlar xonasi</h2>
+      <p class="muted">Xona yarating va kodni do'stlaringizga yuboring, yoki kod bilan kiring.</p>
+      <div class="card">
+        <label class="lbl">Savollar soni</label>
+        <div class="seg" id="room-total"><button data-v="5">5</button><button data-v="10" class="on">10</button><button data-v="15">15</button></div>
+        <button class="primary" id="room-create">Xona yaratish</button>
+      </div>
+      <div class="card">
+        <label class="lbl">Xona kodi</label>
+        <div class="row"><input id="room-code" maxlength="4" autocapitalize="characters" autocomplete="off" placeholder="ABCD"><button class="primary" id="room-join">Kirish</button></div>
+      </div>
+    </div>
+    <div id="room-lobby" hidden>
+      <div class="card codecard">
+        <span class="muted">Xona kodi</span>
+        <div class="code" id="rl-code">----</div>
+        <button class="ghost" id="rl-share">📤 Do'stlarga yuborish</button>
+      </div>
+      <h3>Ishtirokchilar <span id="rl-count" class="badge">0</span></h3>
+      <ul id="rl-list" class="plist"></ul>
+      <p class="muted small" id="rl-info"></p>
+      <button class="primary big" id="rl-start">O'yinni boshlash</button>
+      <button class="ghost" id="rl-leave">Xonadan chiqish</button>
+    </div>
+  </section>
+
+  <!-- TURNIR -->
+  <section id="s-tour" class="screen">
+    <button class="back" data-go="home" id="tour-back">‹ Orqaga</button>
+    <h2 id="tour-title">Turnir</h2>
+    <div id="tour-lobby">
+      <div class="countdown"><b id="tour-cd">30</b><span>soniyadan keyin boshlanadi</span></div>
+      <div class="slots" id="tour-slots"></div>
+      <p class="muted small">Bo'sh o'rinlar bot jangchilar bilan to'ldiriladi. Bot nomlari 🤖 belgisi bilan ko'rsatiladi.</p>
+      <button class="ghost" id="tour-leave">Turnirdan chiqish</button>
+    </div>
+    <div id="tour-bracket" hidden>
+      <div class="banner" id="tour-banner"></div>
+      <div class="bracket" id="bracket"></div>
+      <button class="primary" id="tour-home" hidden>Bosh sahifaga</button>
+    </div>
+  </section>
+
+  <!-- JANG -->
+  <section id="s-game" class="screen game">
+    <div class="arena" id="arena">
+      <div class="fighter me"><div class="fname" id="f-me-name">Siz</div><div class="hp"><i id="hp-me"></i></div><div class="fscore"><b id="sc-me">0</b><em id="pts-me"></em></div></div>
+      <div class="vs">VS</div>
+      <div class="fighter opp"><div class="fname" id="f-opp-name">Raqib</div><div class="hp"><i id="hp-opp"></i></div><div class="fscore"><b id="sc-opp">0</b><em id="pts-opp"></em><span class="done-dot" id="opp-dot" title="Javob berdi"></span></div></div>
+    </div>
+    <div class="roombar" id="roombar" hidden>
+      <div><span class="muted">Ball</span> <b id="rb-score">0</b></div>
+      <div><span class="muted">O'rin</span> <b id="rb-rank">–</b></div>
+      <div><span class="muted">Javob berdi</span> <b id="rb-ans">0</b></div>
+    </div>
+    <div class="timer"><i id="timer-bar"></i><b id="timer-num">15</b></div>
+    <div class="qmeta"><span id="q-num">1 / 7</span><span id="q-cat"></span></div>
+    <div class="qcard" id="q-text">…</div>
+    <div class="opts" id="opts"></div>
+    <div class="reveal" id="reveal" hidden></div>
+    <div class="intro" id="intro"><div><small id="intro-sub">Jang boshlanmoqda</small><h2 id="intro-title">Tayyor bo'ling</h2><div class="vsline"><b id="in-me">Siz</b><span>VS</span><b id="in-opp">Raqib</b></div></div></div>
+  </section>
+
+  <!-- NATIJA -->
+  <section id="s-result" class="screen center">
+    <div class="rtitle" id="r-title">G'ALABA</div>
+    <div class="rsub" id="r-sub"></div>
+    <div class="card rank" id="r-rank"></div>
+    <div class="actions">
+      <button class="primary" id="r-again">Yana jang</button>
+      <button class="ghost" id="r-home">Bosh sahifa</button>
+    </div>
+  </section>
+
+  <!-- REYTING -->
+  <section id="s-top" class="screen">
+    <button class="back" data-go="home">‹ Orqaga</button>
+    <h2>Reyting jadvali</h2>
+    <div id="top-list" class="toplist"></div>
+  </section>
+
+  <div id="toast"></div>
+  <div id="offline" hidden>Ulanish uzildi, qayta ulanmoqda…</div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

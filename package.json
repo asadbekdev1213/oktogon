@@ -1,0 +1,12 @@
+{
+  "name": "huquq-oktagoni",
+  "version": "1.0.0",
+  "description": "O'zbekiston huquqi bo'yicha real vaqtdagi Telegram Mini App musobaqasi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": { "node": ">=18" },
+  "license": "UNLICENSED",
+  "private": true
+}
